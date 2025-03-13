@@ -1,1 +1,1 @@
-type TableAction = "edit" | "delete" | "view";
+type TableActionType = "edit" | "delete" | "view";

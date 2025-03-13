@@ -8,16 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import Aside from "@/app/components/Aside";
-import { useRouter } from "next/navigation";
 
 export default function BackofficeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const route = useRouter();
-  console.log(route);
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <AppBar position="static" sx={{ px: 3 }}>

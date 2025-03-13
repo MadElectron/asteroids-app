@@ -1,14 +1,33 @@
-// import { PaletteOptions } from "@mui/material";
-import ArticleIcon from "@mui/icons-material/Article";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Tooltip } from "@mui/material";
+import { GridActionsCellItem } from "@mui/x-data-grid";
+import { tableActions } from "@/app/utils/variables";
 
-export default function DataTableAction({ type }: { type: TableAction }) {
-  if (type === "view") {
-    return <ArticleIcon color="primary" sx={{ cursor: "pointer" }} />;
-  } else if (type === "edit") {
-    return <EditNoteIcon color="warning" sx={{ cursor: "pointer" }} />;
-  } else if (type === "delete") {
-    return <DeleteOutlineIcon color="error" sx={{ cursor: "pointer" }} />;
+export default function DataTableAction({
+  type,
+  onClick,
+}: {
+  type: TableActionType;
+  onClick?: () => void;
+}) {
+  if (!tableActions[type]) {
+    return null;
   }
+
+  const { color, icon, title, label } = tableActions[type];
+
+  /**
+   * @ts-ignore is added because showInMenu is not set but required in type
+   */
+  return (
+    <Tooltip title={title}>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
+      <GridActionsCellItem
+        icon={icon}
+        label={label}
+        onClick={onClick}
+        color={color}
+      />
+    </Tooltip>
+  );
 }

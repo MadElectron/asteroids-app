@@ -1,116 +1,66 @@
 "use client";
 
 import { Box } from "@mui/material";
-import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import { GridRowId } from "@mui/x-data-grid";
 import DataTable from "@/app/components/DataTable";
-import Title from "@/app/components/Title";
+import PageTitle from "@/app/components/PageTitle";
+import DeleteDialog from "@/app/components/DeleteDialog";
+import { useState } from "react";
+import UserViewDialog from "@/app/components/UserViewDialog";
+import users from "@/app/mock/users";
+import columns from "@/app/columns/users";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const data: User[] = [
-    {
-      id: 1,
-      firstName: "Александр",
-      middleName: "Петрович",
-      lastName: "Иванов",
-      email: "alexander.ivanov@example.com",
-      role: "superadmin",
-    },
-    {
-      id: 2,
-      firstName: "Елена",
-      middleName: "Владимировна",
-      lastName: "Смирнова",
-      email: "elena.smirnova@example.com",
-      role: "admin",
-    },
-    {
-      id: 3,
-      firstName: "Дмитрий",
-      middleName: "Николаевич",
-      lastName: "Кузнецов",
-      email: "dmitry.kuznetsov@example.com",
-      role: "user",
-    },
-    {
-      id: 4,
-      firstName: "Наталья",
-      middleName: "Александровна",
-      lastName: "Попова",
-      email: "natalia.popova@example.com",
-      role: "admin",
-    },
-    {
-      id: 5,
-      firstName: "Сергей",
-      middleName: "Васильевич",
-      lastName: "Михайлов",
-      email: "sergey.mikhailov@example.com",
-      role: "superadmin",
-    },
-    {
-      id: 6,
-      firstName: "Ольга",
-      middleName: "Ивановна",
-      lastName: "Николаева",
-      email: "olga.nikolaeva@example.com",
-      role: "user",
-    },
-    {
-      id: 7,
-      firstName: "Владимир",
-      middleName: "Петрович",
-      lastName: "Соколов",
-      email: "vladimir.sokolov@example.com",
-      role: "admin",
-    },
-    {
-      id: 8,
-      firstName: "Екатерина",
-      middleName: "Владимировна",
-      lastName: "Дмитриева",
-      email: "ekaterina.dmitrieva@example.com",
-      role: "superadmin",
-    },
-  ];
+  const router = useRouter();
 
-  const columns: GridColDef<GridValidRowModel>[] = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 100,
-    },
-    {
-      field: "firstName",
-      headerName: "Имя",
-      width: 150,
-    },
-    {
-      field: "lastName",
-      headerName: "Фамилия",
-      width: 150,
-    },
-    {
-      field: "middleName",
-      headerName: "Отчество",
-      width: 150,
-    },
-    {
-      field: "email",
-      headerName: "Электронная почта",
-      width: 250,
-    },
-    {
-      field: "role",
-      headerName: "Роль",
-      width: 100,
-    },
-  ];
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [id, setId] = useState<GridRowId>("");
+
+  const handleDeleteRowClick = (id: GridRowId) => {
+    setId(id);
+    setDeleteDialogOpen(true);
+  };
+  const handleViewRowClick = (id: GridRowId) => {
+    setId(id);
+    setViewDialogOpen(true);
+  };
+  const handleEditRowClick = (id: GridRowId) => {
+    router.push(`/backoffice/users/${id}`);
+  };
+  const handleAddRowClick = () => {};
+
+  const deleteUser = () => {
+    setDeleteDialogOpen(false);
+    console.log("User deleted");
+  };
 
   return (
     <Box>
-      <Title>Пользователи</Title>
+      <PageTitle>Пользователи</PageTitle>
 
-      <DataTable rows={data} columns={columns} />
+      <DataTable
+        rows={users}
+        columns={columns}
+        viewRow={(id) => handleViewRowClick(id)}
+        deleteRow={(id) => handleDeleteRowClick(id)}
+        editRow={(id) => handleEditRowClick(id)}
+        addRow={handleAddRowClick}
+      />
+
+      <DeleteDialog
+        id={id}
+        open={deleteDialogOpen}
+        ok={deleteUser}
+        cancel={() => setDeleteDialogOpen(false)}
+      />
+
+      <UserViewDialog
+        user={users.find((user) => user.id === id)!}
+        open={viewDialogOpen}
+        cancel={() => setViewDialogOpen(false)}
+      />
     </Box>
   );
 }
