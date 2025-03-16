@@ -5,11 +5,12 @@ import { GridRowId } from "@mui/x-data-grid";
 import DataTable from "@/app/components/DataTable";
 import PageTitle from "@/app/components/PageTitle";
 import DeleteDialog from "@/app/components/DeleteDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserViewDialog from "@/app/components/UserViewDialog";
 import users from "@/app/mock/users";
 import columns from "@/app/columns/users";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/app/state/users";
 
 export default function Page() {
   const router = useRouter();
@@ -35,6 +36,11 @@ export default function Page() {
     setDeleteDialogOpen(false);
     console.log("User deleted");
   };
+
+  useEffect(() => {
+    const { setUsers } = useUserStore.getState();
+    setUsers(users);
+  });
 
   return (
     <Box>
