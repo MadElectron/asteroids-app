@@ -5,22 +5,23 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-// import DraftsIcon from "@mui/icons-material/Drafts";
 
 export default function Aside() {
   return (
     <Drawer
+      component={"aside"}
       variant="permanent"
       sx={{
         width: 240,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
+          pt: 12,
           width: 240,
           boxSizing: "border-box",
         },
       }}
     >
-      <List>
+      <List id="list">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemText primary="Inbox" />
