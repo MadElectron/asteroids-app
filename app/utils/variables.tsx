@@ -31,3 +31,9 @@ export const tableActions: Record<
     label: "delete",
   },
 };
+
+export const roles: Record<Role, string> = {
+  superadmin: "Суперадминистратор",
+  admin: "Администратор",
+  user: "Пользователь",
+};

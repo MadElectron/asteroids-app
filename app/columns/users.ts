@@ -1,4 +1,5 @@
 import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import { roles } from "@/app/utils/variables";
 
 const columns: GridColDef<GridValidRowModel>[] = [
   {
@@ -29,7 +30,8 @@ const columns: GridColDef<GridValidRowModel>[] = [
   {
     field: "role",
     headerName: "Роль",
-    width: 100,
+    renderCell: (params) => roles[params.value as Role] || "",
+    width: 170,
   },
 ];
 
