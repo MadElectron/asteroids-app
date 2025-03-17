@@ -1,9 +1,10 @@
 import { create } from "zustand";
 import users from "@/app/mock/users";
+import { GridRowId } from "@mui/x-data-grid";
 
 interface UserState {
   users: User[];
-  setUsers: (users: User[]) => void;
+  setUsers: () => void;
   addUser: (user: User) => void;
   editUser: (user: User) => void;
   removeUser: (id: number) => void;
@@ -27,9 +28,11 @@ export const useUserStore = create<UserState>((set) => ({
       users: state.users.map((u) => (u.id === user.id ? user : u)),
     }));
   },
-  removeUser: (id: number) => {
+
+  removeUser: (id: GridRowId) => {
+    console.log(id);
     set((state) => ({
-      users: state.users.filter((user) => user.id !== id),
+      users: state.users.filter((user) => user.id !== (id as number)),
     }));
   },
 }));

@@ -7,7 +7,6 @@ import PageTitle from "@/app/components/PageTitle";
 import DeleteDialog from "@/app/components/DeleteDialog";
 import { useEffect, useState } from "react";
 import UserViewDialog from "@/app/components/UserViewDialog";
-import users from "@/app/mock/users";
 import columns from "@/app/columns/users";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/app/state/users";
@@ -18,6 +17,7 @@ export default function Page() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [id, setId] = useState<GridRowId>("");
+  const { users, setUsers, removeUser } = useUserStore();
 
   const handleDeleteRowClick = (id: GridRowId) => {
     setId(id);
@@ -34,13 +34,14 @@ export default function Page() {
 
   const deleteUser = () => {
     setDeleteDialogOpen(false);
-    console.log("User deleted");
+    removeUser(id as number);
   };
 
   useEffect(() => {
-    const { setUsers } = useUserStore.getState();
-    setUsers(users);
-  });
+    if (users.length === 0) {
+      setUsers();
+    }
+  }, [users, setUsers]);
 
   return (
     <Box>
@@ -63,7 +64,7 @@ export default function Page() {
       />
 
       <UserViewDialog
-        user={users.find((user) => user.id === id)!}
+        user={users.find((user) => user.id === (id as number))!}
         open={viewDialogOpen}
         cancel={() => setViewDialogOpen(false)}
       />
