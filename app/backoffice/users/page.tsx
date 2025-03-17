@@ -11,6 +11,7 @@ import columns from "@/app/columns/users";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/app/store/users";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useAppStore } from "@/app/store/app";
 
 export default function Page() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Page() {
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [id, setId] = useState<GridRowId>("");
   const { users, setUsers, removeUser } = useUserStore();
+  const { notify } = useAppStore();
 
   const handleDeleteRowClick = (id: GridRowId) => {
     setId(id);
@@ -38,6 +40,10 @@ export default function Page() {
   const deleteUser = () => {
     setDeleteDialogOpen(false);
     removeUser(id as number);
+    notify({
+      message: `Пользователь {ID: ${id}} успешно удалён`,
+      variant: "success",
+    });
   };
 
   useEffect(() => {

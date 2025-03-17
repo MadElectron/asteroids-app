@@ -6,3 +6,8 @@ type SessionPayload = {
   userId: number;
   expiresAt: Date;
 };
+
+type Snack = {
+  message: string;
+  variant: "success" | "info" | "warning" | "error";
+};

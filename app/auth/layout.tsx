@@ -2,6 +2,7 @@
 
 import { Box } from "@mui/material";
 import { RouteChangeListener } from "@/app/components/RouteChangeListener";
+import Notifications from "@/app/components/Notifications";
 
 export default function AuthLayout({
   children,
@@ -11,7 +12,7 @@ export default function AuthLayout({
   return (
     <>
       <RouteChangeListener />
-
+      <Notifications />
       <Box
         id="wrapper"
         component="div"

@@ -6,15 +6,19 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useUserStore from "@/app/store/users";
 import UserForm from "@/app/components/UserForm";
+import { useAppStore } from "@/app/store/app";
 
 export default function Page() {
   const router = useRouter();
   const store = useUserStore();
   const [user] = useState<User | null>(null);
+  const { notify } = useAppStore();
 
   const handleSubmit = (user: User) => {
     store.addUser(user);
     router.push("/backoffice/users");
+
+    notify({ message: "Пользователь успешно создан", variant: "success" });
   };
 
   return (

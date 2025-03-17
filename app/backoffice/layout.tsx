@@ -11,6 +11,7 @@ import Aside from "@/app/components/Aside";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { RouteChangeListener } from "@/app/components/RouteChangeListener";
 import UserAvatar from "@/app/components/UserAvatar";
+import Notifications from "@/app/components/Notifications";
 
 export default function BackofficeLayout({
   children,
@@ -20,6 +21,7 @@ export default function BackofficeLayout({
   return (
     <>
       <RouteChangeListener />
+      <Notifications />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <AppBar
           position="static"
