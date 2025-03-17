@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import UserViewDialog from "@/app/components/UserViewDialog";
 import columns from "@/app/columns/users";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/app/state/users";
+import { useUserStore } from "@/app/store/users";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 
 export default function Page() {

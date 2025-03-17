@@ -4,7 +4,7 @@ import PageTitle from "@/app/components/PageTitle";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import useUserStore from "@/app/state/users";
+import useUserStore from "@/app/store/users";
 import UserForm from "@/app/components/UserForm";
 
 export default function Page() {

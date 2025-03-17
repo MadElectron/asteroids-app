@@ -1,3 +1,8 @@
+type AuthData = {
+  username: string;
+  password: string;
+};
+
 type Role = "superadmin" | "admin" | "user";
 
 type User = {
