@@ -19,8 +19,11 @@ export const useUserStore = create<UserState>((set) => ({
     set({ users });
   },
   addUser: (user: User) => {
+    // Synthetic new ID
+    const id = Math.max(...users.map((u) => u.id)) + 1;
+
     set((state) => ({
-      users: [...state.users, user],
+      users: [...state.users, { ...user, id: id }],
     }));
   },
   editUser: (user: User) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { GridRowId } from "@mui/x-data-grid";
 import DataTable from "@/app/components/DataTable";
 import PageTitle from "@/app/components/PageTitle";
@@ -10,6 +10,7 @@ import UserViewDialog from "@/app/components/UserViewDialog";
 import columns from "@/app/columns/users";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/app/state/users";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
 export default function Page() {
   const router = useRouter();
@@ -30,7 +31,9 @@ export default function Page() {
   const handleEditRowClick = (id: GridRowId) => {
     router.push(`/backoffice/users/${id}`);
   };
-  const handleAddRowClick = () => {};
+  const handleAddRowClick = () => {
+    router.push("/backoffice/users/add");
+  };
 
   const deleteUser = () => {
     setDeleteDialogOpen(false);
@@ -47,6 +50,10 @@ export default function Page() {
     <Box>
       <PageTitle>Пользователи</PageTitle>
 
+      <Button sx={{ mb: 2 }} variant="contained" onClick={handleAddRowClick}>
+        <AddBoxIcon sx={{ mr: 1 }} />
+        Добавить
+      </Button>
       <DataTable
         rows={users}
         columns={columns}
