@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    API_KEY: process.env.NASA_API_KEY,
+  },
   sassOptions: {
     implementation: "sass-embedded",
   },
