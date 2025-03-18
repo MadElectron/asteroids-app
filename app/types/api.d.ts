@@ -13,3 +13,21 @@ type User = {
   email: string;
   role: Role;
 };
+
+type AsteroidsRequestParams = {
+  startDate: string;
+  endDate: string;
+  detailed: boolean;
+  apiKey?: string;
+};
+
+type Asteroid = {
+  id: number;
+  name: string;
+  absoluteMagnitudeH: number;
+  estimatedDiameterMin: number;
+  estimatedDiameterMax: number;
+  relativeVelocity: number;
+  missDistance: number;
+  isPotentiallyHazardousAsteroid: boolean;
+};

@@ -6,16 +6,21 @@ import {
   ListItemText,
 } from "@mui/material";
 
-export default function Aside() {
+export default function Aside({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   return (
     <Drawer
-      component={"aside"}
-      variant="permanent"
+      open={open}
+      onClose={onClose}
       sx={{
         width: 240,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
-          pt: 12,
           width: 240,
           boxSizing: "border-box",
         },
