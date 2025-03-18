@@ -10,7 +10,6 @@ const service: AxiosInstance = axios.create({
 service.interceptors.request.use(
   (config) => {
     config.params.api_key = process.env.API_KEY;
-    console.log(process.env.API_KEY, config);
 
     return config;
   },

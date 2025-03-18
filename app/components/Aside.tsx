@@ -3,9 +3,12 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
 } from "@mui/material";
-
+import PersonIcon from "@mui/icons-material/Person";
+import CookieIcon from "@mui/icons-material/Cookie";
+import { useRouter } from "next/navigation";
 export default function Aside({
   open,
   onClose,
@@ -13,6 +16,8 @@ export default function Aside({
   open: boolean;
   onClose: () => void;
 }) {
+  const router = useRouter();
+
   return (
     <Drawer
       open={open}
@@ -21,6 +26,7 @@ export default function Aside({
         width: 240,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
+          pt: 5,
           width: 240,
           boxSizing: "border-box",
         },
@@ -28,8 +34,20 @@ export default function Aside({
     >
       <List id="list">
         <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="Inbox" />
+          <ListItemButton onClick={() => router.push("/backoffice/users")}>
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="Пользователи" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => router.push("/backoffice/asteroids")}>
+            <ListItemIcon>
+              <CookieIcon />
+            </ListItemIcon>
+            <ListItemText primary="Астероиды" />
           </ListItemButton>
         </ListItem>
       </List>

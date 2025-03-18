@@ -5,46 +5,72 @@ import PageTitle from "@/app/components/PageTitle";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import columns from "@/app/columns/asteroids";
-import { values, flatten } from "lodash";
+import { convertData } from "@/app/utils/convertData";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
 
 export default function Page() {
   const [data, setData] = useState<Asteroid[]>([]);
+  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
+  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().add(1, "week"));
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const convertData = (data: any): Asteroid[] => {
-    console.log(data.near_earth_objects);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return flatten(values(data.near_earth_objects)).map((item: any) => {
-      return {
-        id: item.id,
-        name: item.name,
-        absoluteMagnitudeH: item.absolute_magnitude_h,
-        estimatedDiameterMin:
-          item.estimated_diameter.meters.estimated_diameter_min,
-        estimatedDiameterMax:
-          item.estimated_diameter.meters.estimated_diameter_max,
-        relativeVelocity:
-          item.close_approach_data[0].relative_velocity.kilometers_per_second,
-        missDistance: item.close_approach_data[0].miss_distance.kilometers,
-        isPotentiallyHazardousAsteroid: item.is_potentially_hazardous_asteroid,
-      };
-    });
-  };
-
-  useEffect(() => {
+  const getData = () => {
     getAsteroidsList({
-      startDate: "2025-03-11",
-      endDate: "2025-03-12",
+      startDate: startDate?.format("YYYY-MM-DD") || "",
+      endDate: endDate?.format("YYYY-MM-DD") || "",
       detailed: false,
     }).then((res) => {
       const data = convertData(res.data) as Asteroid[];
       setData(data);
     });
+  };
+
+  const handleStartDateChange = (newValue: Dayjs | null) => {
+    setStartDate(newValue as Dayjs);
+
+    console.log(newValue, startDate?.isAfter(endDate));
+    if (newValue && newValue?.isAfter(endDate)) {
+      setEndDate(newValue.add(1, "week"));
+    }
+
+    getData();
+  };
+
+  const handleEndDateChange = (newValue: Dayjs | null) => {
+    setEndDate(newValue as Dayjs);
+
+    if (newValue && newValue?.isBefore(startDate)) {
+      setStartDate(newValue.subtract(1, "week"));
+    }
+
+    getData();
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
     <Box>
       <PageTitle>Астероиды</PageTitle>
+      <Box sx={{ my: 2, display: "flex", gap: 2 }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+          <DatePicker
+            value={startDate}
+            label="Дата начала поиска"
+            onChange={handleStartDateChange}
+          />
+          <DatePicker
+            value={endDate}
+            label="Дата конца поиска"
+            onChange={handleEndDateChange}
+          />
+        </LocalizationProvider>
+      </Box>
 
       <DataTable rows={data} columns={columns} noActions />
     </Box>

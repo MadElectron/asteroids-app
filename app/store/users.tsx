@@ -33,7 +33,6 @@ export const useUserStore = create<UserState>((set) => ({
   },
 
   removeUser: (id: GridRowId) => {
-    console.log(id);
     set((state) => ({
       users: state.users.filter((user) => user.id !== (id as number)),
     }));
