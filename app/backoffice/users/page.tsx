@@ -16,6 +16,7 @@ import { useAppStore } from "@/app/store/app";
 export default function Page() {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [id, setId] = useState<GridRowId>("");
@@ -47,9 +48,11 @@ export default function Page() {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (users.length === 0) {
       setUsers();
     }
+    setLoading(false);
   }, [users, setUsers]);
 
   return (
@@ -61,12 +64,12 @@ export default function Page() {
         Добавить
       </Button>
       <DataTable
+        loading={loading}
         rows={users}
         columns={columns}
         viewRow={(id) => handleViewRowClick(id)}
         deleteRow={(id) => handleDeleteRowClick(id)}
         editRow={(id) => handleEditRowClick(id)}
-        addRow={handleAddRowClick}
       />
 
       <DeleteDialog

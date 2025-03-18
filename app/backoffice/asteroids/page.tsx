@@ -14,11 +14,13 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
 export default function Page() {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Asteroid[]>([]);
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().add(1, "week"));
 
   const getData = () => {
+    setLoading(true);
     getAsteroidsList({
       startDate: startDate?.format("YYYY-MM-DD") || "",
       endDate: endDate?.format("YYYY-MM-DD") || "",
@@ -26,6 +28,7 @@ export default function Page() {
     }).then((res) => {
       const data = convertData(res.data) as Asteroid[];
       setData(data);
+      setLoading(false);
     });
   };
 
@@ -72,7 +75,7 @@ export default function Page() {
         </LocalizationProvider>
       </Box>
 
-      <DataTable rows={data} columns={columns} noActions />
+      <DataTable loading={loading} rows={data} columns={columns} noActions />
     </Box>
   );
 }

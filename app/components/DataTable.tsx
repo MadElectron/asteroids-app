@@ -11,6 +11,7 @@ import {
 import DataTableAction from "@/app/components/DataTableAction";
 
 export default function DataTable({
+  loading,
   rows,
   columns,
   noActions,
@@ -18,6 +19,7 @@ export default function DataTable({
   editRow,
   viewRow,
 }: {
+  loading: boolean;
   rows: GridValidRowModel[];
   columns: GridColDef<GridValidRowModel>[];
   noActions?: boolean;
@@ -79,7 +81,17 @@ export default function DataTable({
   return (
     <Paper sx={{ height: 400 }}>
       <ThemeProvider theme={theme}>
-        <DataGrid rows={rows} columns={columns} />
+        <DataGrid
+          loading={loading}
+          rows={rows}
+          columns={columns}
+          slotProps={{
+            loadingOverlay: {
+              variant: "skeleton",
+              noRowsVariant: "skeleton",
+            },
+          }}
+        />
       </ThemeProvider>
     </Paper>
   );
