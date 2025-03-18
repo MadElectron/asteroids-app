@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import CookieIcon from "@mui/icons-material/Cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAppStore } from "@/app/store/app";
 
 export default function Aside({
@@ -19,11 +19,16 @@ export default function Aside({
   onClose: () => void;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { setAppLoading } = useAppStore();
 
   const handleRouteChange = (path: string) => {
-    setAppLoading(true);
-    router.push(path);
+    onClose();
+
+    if (pathname !== path) {
+      setAppLoading(true);
+      router.push(path);
+    }
   };
 
   return (
