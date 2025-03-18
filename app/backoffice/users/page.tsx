@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useUserStore } from "@/app/store/users";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useAppStore } from "@/app/store/app";
+import Loader from "@/app/components/Loader";
 
 export default function Page() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function Page() {
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [id, setId] = useState<GridRowId>("");
   const { users, setUsers, removeUser } = useUserStore();
-  const { notify } = useAppStore();
+  const { notify, setAppLoading } = useAppStore();
 
   const handleDeleteRowClick = (id: GridRowId) => {
     setId(id);
@@ -32,9 +33,11 @@ export default function Page() {
     setViewDialogOpen(true);
   };
   const handleEditRowClick = (id: GridRowId) => {
+    setAppLoading(true);
     router.push(`/backoffice/users/${id}`);
   };
   const handleAddRowClick = () => {
+    setAppLoading(true);
     router.push("/backoffice/users/add");
   };
 
@@ -57,6 +60,8 @@ export default function Page() {
 
   return (
     <Box>
+      <Loader />
+
       <PageTitle>Пользователи</PageTitle>
 
       <Button sx={{ mb: 2 }} variant="contained" onClick={handleAddRowClick}>

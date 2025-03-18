@@ -12,10 +12,11 @@ export default function Page() {
   const router = useRouter();
   const store = useUserStore();
   const [user] = useState<User | null>(null);
-  const { notify } = useAppStore();
+  const { notify, setAppLoading } = useAppStore();
 
   const handleSubmit = (user: User) => {
     store.addUser(user);
+    setAppLoading(true);
     router.push("/backoffice/users");
 
     notify({ message: "Пользователь успешно создан", variant: "success" });
@@ -25,6 +26,7 @@ export default function Page() {
     <>
       <Button
         onClick={() => {
+          setAppLoading(true);
           router.push("/backoffice/users");
         }}
       >

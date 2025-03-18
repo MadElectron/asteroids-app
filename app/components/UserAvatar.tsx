@@ -7,7 +7,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useState } from "react";
-import { useAuthStore } from "../store/auth";
+import { useAuthStore } from "@/app/store/auth";
 import { useRouter } from "next/navigation";
 
 export default function UserAvatar() {

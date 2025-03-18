@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function Notifications() {
   useEffect(() =>
     useAppStore.subscribe((state) => {
-      const snack = [...state.notifications].pop() as Snack;
+      const snack = state.notifications.pop() as Snack;
 
       if (snack) {
         const { message, variant } = snack;

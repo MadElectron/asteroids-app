@@ -9,6 +9,8 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import CookieIcon from "@mui/icons-material/Cookie";
 import { useRouter } from "next/navigation";
+import { useAppStore } from "@/app/store/app";
+
 export default function Aside({
   open,
   onClose,
@@ -17,6 +19,12 @@ export default function Aside({
   onClose: () => void;
 }) {
   const router = useRouter();
+  const { setAppLoading } = useAppStore();
+
+  const handleRouteChange = (path: string) => {
+    setAppLoading(true);
+    router.push(path);
+  };
 
   return (
     <Drawer
@@ -34,7 +42,9 @@ export default function Aside({
     >
       <List id="list">
         <ListItem disablePadding>
-          <ListItemButton onClick={() => router.push("/backoffice/users")}>
+          <ListItemButton
+            onClick={() => handleRouteChange("/backoffice/users")}
+          >
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
@@ -43,7 +53,9 @@ export default function Aside({
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton onClick={() => router.push("/backoffice/asteroids")}>
+          <ListItemButton
+            onClick={() => handleRouteChange("/backoffice/asteroids")}
+          >
             <ListItemIcon>
               <CookieIcon />
             </ListItemIcon>

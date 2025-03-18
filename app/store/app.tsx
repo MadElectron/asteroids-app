@@ -4,6 +4,7 @@ interface AppState {
   loading: boolean;
   notifications: Snack[];
   notify: (payload: Snack) => void;
+  setAppLoading: (loading: boolean) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -13,5 +14,8 @@ export const useAppStore = create<AppState>((set) => ({
     set((state) => ({
       notifications: [...state.notifications, payload],
     }));
+  },
+  setAppLoading(loading) {
+    set({ loading });
   },
 }));
