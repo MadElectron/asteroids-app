@@ -49,12 +49,12 @@ export default function Aside({
       <List id="list">
         <ListItem disablePadding>
           <ListItemButton
-            onClick={() => handleRouteChange("/backoffice/users")}
+            onClick={() => handleRouteChange("/backoffice/dashboard")}
           >
             <ListItemIcon>
-              <PersonIcon />
+              <PollIcon />
             </ListItemIcon>
-            <ListItemText primary="Пользователи" />
+            <ListItemText primary="Статистика" />
           </ListItemButton>
         </ListItem>
 
@@ -71,12 +71,12 @@ export default function Aside({
 
         <ListItem disablePadding>
           <ListItemButton
-            onClick={() => handleRouteChange("/backoffice/dashboard")}
+            onClick={() => handleRouteChange("/backoffice/users")}
           >
             <ListItemIcon>
-              <PollIcon />
+              <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="Статистика" />
+            <ListItemText primary="Пользователи" />
           </ListItemButton>
         </ListItem>
       </List>

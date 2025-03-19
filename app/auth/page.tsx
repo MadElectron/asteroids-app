@@ -14,7 +14,7 @@ export default function Page() {
     const loggedIn = await useAuthStore.getState().login(data);
 
     if (loggedIn) {
-      router.push("/backoffice/users");
+      router.push("/backoffice/dashboard");
     } else {
       notify({
         message: "Неверный логин или пароль",

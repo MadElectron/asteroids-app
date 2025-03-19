@@ -16,7 +16,7 @@ export function RouteChangeListener() {
       router.push("/auth");
     } else if (token) {
       if (isAuthPage) {
-        router.push("/backoffice/users");
+        router.push("/backoffice/dashboard");
       } else if (!user) {
         setUser();
       }
