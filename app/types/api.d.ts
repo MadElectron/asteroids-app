@@ -31,3 +31,8 @@ type Asteroid = {
   missDistance: number;
   isPotentiallyHazardousAsteroid: boolean;
 };
+
+type BarChartData = {
+  axis: string[];
+  series: { data: number[] }[];
+};

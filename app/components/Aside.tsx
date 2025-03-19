@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import CookieIcon from "@mui/icons-material/Cookie";
+import PollIcon from "@mui/icons-material/Poll";
 import { useRouter, usePathname } from "next/navigation";
 import { useAppStore } from "@/app/store/app";
 
@@ -65,6 +66,17 @@ export default function Aside({
               <CookieIcon />
             </ListItemIcon>
             <ListItemText primary="Астероиды" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => handleRouteChange("/backoffice/dashboard")}
+          >
+            <ListItemIcon>
+              <PollIcon />
+            </ListItemIcon>
+            <ListItemText primary="Статистика" />
           </ListItemButton>
         </ListItem>
       </List>

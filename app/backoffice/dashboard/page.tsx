@@ -1,26 +1,36 @@
 "use client";
 
 import { getAsteroidsList } from "@/app/api/asteroids";
-import DataTable from "@/app/components/DataTable";
-import PageTitle from "@/app/components/PageTitle";
-import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import columns from "@/app/columns/asteroids";
-import { convertData } from "@/app/utils/asteroids";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import {
+  convertDataByHazardousness,
+  convertDataByMissDistance,
+} from "@/app/utils/asteroids";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import { Box, Stack } from "@mui/material";
+import PageTitle from "@/app/components/PageTitle";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import AsteroidsMissDistanceChart from "@/app/components/charts/AsteroidsMissDistance";
+import AsteroidsHazardousnessChart from "@/app/components/charts/AsteroidsHazardousness";
 import { useAppStore } from "@/app/store/app";
+import { DateField } from "@mui/x-date-pickers";
 
 export default function Page() {
   const { notify } = useAppStore();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<Asteroid[]>([]);
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().add(1, "week"));
+  const [dataByMissDistance, setDataByMissDistance] = useState<BarChartData>({
+    axis: [],
+    series: [],
+  });
+  const [dataByHazardousness, setDataByHazardousness] = useState<
+    [number, number]
+  >([0, 0]);
 
   const getData = () => {
     setLoading(true);
@@ -30,9 +40,14 @@ export default function Page() {
       detailed: false,
     })
       .then((res) => {
-        const data = convertData(res.data) as Asteroid[];
-        setData(data);
         setLoading(false);
+        setDataByMissDistance(convertDataByMissDistance(res.data));
+        setDataByHazardousness(convertDataByHazardousness(res.data));
+
+        console.log(
+          convertDataByMissDistance(res.data),
+          convertDataByHazardousness(res.data)
+        );
       })
       .catch((error) => {
         notify({
@@ -46,18 +61,8 @@ export default function Page() {
   const handleStartDateChange = (newValue: Dayjs | null) => {
     setStartDate(newValue as Dayjs);
 
-    if (newValue && newValue?.isAfter(endDate)) {
+    if (newValue) {
       setEndDate(newValue.add(1, "week"));
-    }
-
-    getData();
-  };
-
-  const handleEndDateChange = (newValue: Dayjs | null) => {
-    setEndDate(newValue as Dayjs);
-
-    if (newValue && newValue?.isBefore(startDate)) {
-      setStartDate(newValue.subtract(1, "week"));
     }
 
     getData();
@@ -69,7 +74,7 @@ export default function Page() {
 
   return (
     <Box>
-      <PageTitle>Астероиды</PageTitle>
+      <PageTitle>Статистика за неделю</PageTitle>
       <Box sx={{ my: 2, display: "flex", gap: 2 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
@@ -77,15 +82,20 @@ export default function Page() {
             label="Дата начала поиска"
             onChange={handleStartDateChange}
           />
-          <DatePicker
-            value={endDate}
-            label="Дата конца поиска"
-            onChange={handleEndDateChange}
-          />
+          <DateField disabled value={endDate} label="Дата конца поиска" />
         </LocalizationProvider>
       </Box>
 
-      <DataTable loading={loading} rows={data} columns={columns} noActions />
+      <Stack spacing={2} direction={"row"}>
+        <AsteroidsMissDistanceChart
+          loading={loading}
+          data={dataByMissDistance}
+        />
+        <AsteroidsHazardousnessChart
+          loading={loading}
+          data={dataByHazardousness}
+        />
+      </Stack>
     </Box>
   );
 }
