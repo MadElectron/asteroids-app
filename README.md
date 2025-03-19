@@ -20,8 +20,8 @@ NASA_API_KEY=<YOUR_NASA_API_KEY>
 
 ```
 npm i
-npm build
-npm start
+npm run build
+npm run start
 ```
 
 Откройте [http://localhost:3000/](http://localhost:3000) в браузере, чтоб увидеть результат.
