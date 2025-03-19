@@ -16,6 +16,8 @@ NASA_API_KEY=<YOUR_NASA_API_KEY>
 
 ## Установка
 
+В корневой директории выполните команды:
+
 ```
 npm i
 npm build
