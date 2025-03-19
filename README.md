@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Asteroids app
 
-## Getting Started
+Приложение для просмотра информации об астероидах на основе данных [NASA API](https://api.nasa.gov/). Это проект на [Next.js](https://nextjs.org), созданный с помощью [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-First, run the development server:
+## Структура проекта
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+В приложении используются данные об астероидах, полученные из NASA API, и демонстрационные данные о пользователях, находящиеся в файле `mock/users.ts`. Авторизация пользователей осуществляется в десонтсационном-режиме, запросы к API не производятся. Все CRUD-действия с данными пользователей производятся в пределах приложения. После обновления страницы данные о пользователях заново загружаются из файла.
+
+## Получение ключа NASA API
+
+Ключ можно получить на странице [NASA API](https://api.nasa.gov/), затем в корневой директории создать файл `.env` и добавить в него созданный ключ в качестве переменной:
+
+```
+NASA_API_KEY=<YOUR_NASA_API_KEY>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Установка
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm i
+npm build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Откройте [http://localhost:3000/](http://localhost:3000) в браузере, чтоб увидеть результат.
 
-## Learn More
+## Авторизация
 
-To learn more about Next.js, take a look at the following resources:
+Для авторизации на странице `/auth` введите e-mail одного из пользователей:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+alexander.ivanov@example.com
+elena.smirnova@example.com
+dmitry.kuznetsov@example.com
+natalia.popova@example.com
+sergey.mikhailov@example.com
+olga.nikolaeva@example.com
+ekaterina.dmitrieva@example.com
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Пароль для всех одинаковый - `1111`.
