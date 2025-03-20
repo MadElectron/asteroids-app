@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { DefaultizedPieValueType, legendClasses } from "@mui/x-charts";
+import { DefaultizedPieValueType } from "@mui/x-charts";
 import { pieArcLabelClasses, PieChart } from "@mui/x-charts/PieChart";
 
 export default function AsteroidsHazardousness({
