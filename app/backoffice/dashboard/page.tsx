@@ -86,7 +86,10 @@ export default function Page() {
         </LocalizationProvider>
       </Box>
 
-      <Stack spacing={2} direction={"row"}>
+      <Stack
+        spacing={{ xs: 6, md: 2 }}
+        direction={{ xs: "column-reverse", md: "row" }}
+      >
         <AsteroidsMissDistanceChart
           loading={loading}
           data={dataByMissDistance}

@@ -56,7 +56,7 @@ export default function BackofficeLayout({
         <Box sx={{ display: "flex", flex: 1, mt: 4 }}>
           <Aside open={drawerOpen} onClose={handleDrawerToggle} />
 
-          <Box component="main" sx={{ flex: 1, p: 3 }}>
+          <Box component="main" sx={{ flex: 1, p: 3, overflow: "auto" }}>
             {children}
           </Box>
         </Box>

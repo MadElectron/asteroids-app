@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { DefaultizedPieValueType } from "@mui/x-charts";
+import { DefaultizedPieValueType, legendClasses } from "@mui/x-charts";
 import { pieArcLabelClasses, PieChart } from "@mui/x-charts/PieChart";
 
 export default function AsteroidsHazardousness({
@@ -21,20 +21,23 @@ export default function AsteroidsHazardousness({
   ];
 
   return (
-    <Box width={500}>
+    <Box height={400}>
       <Typography sx={{ mb: 2 }}>
         Число астероидов по потенциальной опасности
       </Typography>
       <PieChart
         loading={loading}
+        width={400}
         slotProps={{
           loadingOverlay: { message: "Загрузка..." },
           noDataOverlay: { message: "Нет данных" },
+          legend: {
+            direction: "row",
+            position: { vertical: "top", horizontal: "left" },
+          },
         }}
         series={series}
         colors={palette}
-        height={290}
-        width={500}
         sx={{
           [`& .${pieArcLabelClasses.root}`]: {
             fontWeight: "bold",

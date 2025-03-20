@@ -11,7 +11,10 @@ export default function AsteroidsMissDistance({
   const { axis, series } = data;
 
   return (
-    <Box width={"100%"}>
+    <Box
+      width={{ md: "100%" }}
+      sx={{ overflow: { xs: "scroll", sm: "unset" } }}
+    >
       <Typography sx={{ mb: 2 }}>
         Расстояние от астероида до земли, млн. км
       </Typography>
